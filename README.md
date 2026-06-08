@@ -28,7 +28,9 @@ git push -u origin main
 - **Actions** → workflow **Keep Render awake** → **Enable workflow**
 - Test manuel : **Run workflow**
 
-Le job tourne automatiquement toutes les **13 minutes**.
+Le job ping automatiquement toutes les **13 minutes**, uniquement **8h–20h** (lun–dim), fuseau **Africa/Lome**.
+
+**Consommation Render estimée : ~360 h/mois** (12 h/jour × ~30 jours), bien sous les 750 h du free tier.
 
 > Les crons GitHub peuvent avoir 1–5 min de retard ; 13 min reste sous la limite de 15 min Render.
 

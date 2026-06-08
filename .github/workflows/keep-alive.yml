@@ -2,9 +2,12 @@ name: Keep Render awake
 
 on:
   schedule:
-    # Toutes les 13 minutes (< 15 min d'inactivité Render)
-    - cron: "*/13 * * * *"
+    # Toutes les 13 min, entre 8h et 19h59 UTC (= 8h–20h à Lomé, UTC+0)
+    - cron: "*/13 8-19 * * *"
   workflow_dispatch:
+
+env:
+  TZ: Africa/Lome
 
 jobs:
   ping:
@@ -12,12 +15,18 @@ jobs:
     steps:
       - name: Ping application
         run: |
+          HOUR=$(date +%H)
+          if [ "$HOUR" -lt 8 ] || [ "$HOUR" -ge 20 ]; then
+            echo "Hors plage 8h–20h ($TZ), ping ignoré"
+            exit 0
+          fi
+
           URL="${{ secrets.RENDER_APP_URL }}"
           if [ -z "$URL" ]; then
             echo "Erreur: définissez le secret RENDER_APP_URL dans GitHub"
             exit 1
           fi
-          echo "Ping → $URL"
+          echo "Ping → $URL ($(date '+%H:%M %Z'))"
           HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 120 -L "$URL")
           echo "HTTP $HTTP_CODE"
           if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 500 ]; then
