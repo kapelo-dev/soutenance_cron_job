@@ -12,7 +12,7 @@ git init
 git add .
 git commit -m "Add Render keep-alive cron (13 min)"
 git branch -M main
-git remote add origin https://github.com/TON_USER/keep-render-awake.git
+git remote add origin git@github.com:kapelo-dev/soutenance_cron_job.git
 git push -u origin main
 ```
 
@@ -21,7 +21,7 @@ git push -u origin main
 1. GitHub → ton repo → **Settings** → **Secrets and variables** → **Actions**
 2. **New repository secret**
 3. Nom : `RENDER_APP_URL`
-4. Valeur : l’URL complète de ton app, ex. `https://mon-app.onrender.com` ou `https://mon-app.onrender.com/health`
+4. Valeur : `https://pdvconnect-67i4.onrender.com`
 
 ### 3. Activer les workflows planifiés
 
